@@ -1,0 +1,33 @@
+{
+	"name": "burzum/storage",
+	"type": "library",
+	"description": "This library is a factory to instantiate storage adapters based on the Flysystem or Gaufrette library. It can deal with both! Migrating from one lib to another should be easy this way.",
+	"keywords": ["file", "filesystem", "media", "abstraction", "cakephp", "storage"],
+	"homepage": "http://github.com/burzum/storage",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Florian Krämer",
+			"homepage": "http://florian-kraemer.net"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"knplabs/gaufrette": "*",
+		"league/flysystem": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Burzum\\Storage\\": "src",
+			"Burzum\\Storage\\Test\\Fixture\\": "tests\\Fixture"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Burzum\\Storage\\Test\\": "tests"
+		}
+	}
+}
