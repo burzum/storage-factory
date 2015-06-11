@@ -15,22 +15,20 @@ class StorageManager {
  *
  * @var array
  */
-    protected $_adapterConfig = [
-        'Local' => [
-            'engine' => 'Gaufrette',
-            'adapterOptions' => [TMP, true],
-            'adapterClass' => '\Gaufrette\Adapter\Local',
-            'class' => '\Gaufrette\Filesystem'
-        ]
-    ];
+    protected $_adapterConfig = [];
 
+/**
+ * Supported storage engines / libraries
+ */
     const GAUFRETTE_ENGINE = 'Gaufrette';
     const FLYSYSTEM_ENGINE = 'Flysystem';
 
 /**
  * Default engine
+ *
+ * @var string
  */
-    public static $engine = 'Gaufrette';
+    public static $defaultEngine = 'Gaufrette';
 
 /**
  * Return a singleton instance of the StorageManager.
@@ -49,15 +47,15 @@ class StorageManager {
 /**
  * Gets the configuration array for an adapter.
  *
- * @param string $adapter
- * @param array $options
+ * @param string $adapter Configuration name under which the config is stored.
+ * @param array $options Adapter configuration.
  * @return mixed
  */
-    public static function config($adapter, $options = [])
+    public static function config($adapter, array $options = [])
     {
         $_this = StorageManager::getInstance();
 
-        if (!empty($adapter) && !empty($options)) {
+        if (!empty($options)) {
             return $_this->_adapterConfig[$adapter] = $options;
         }
 
@@ -79,12 +77,16 @@ class StorageManager {
     {
         $_this = StorageManager::getInstance();
 
-        if (isset($_this->_adapterConfig[$name])) {
-            unset($_this->_adapterConfig[$name]);
-            return true;
+        if (!is_null($name)) {
+            if (isset($_this->_adapterConfig[$name])) {
+                unset($_this->_adapterConfig[$name]);
+                return true;
+            }
+            return false;
         }
 
-        return false;
+        $_this->_adapterConfig = [];
+        return true;
     }
 
 /**
@@ -150,7 +152,7 @@ class StorageManager {
         }
 
         if (empty($adapter['engine'])) {
-            $adapter['engine'] = self::$engine;
+            $adapter['engine'] = self::$defaultEngine;
         }
         if ($adapter['engine'] === self::GAUFRETTE_ENGINE) {
             $object = self::gaufretteFactory($adapter);
@@ -176,7 +178,7 @@ class StorageManager {
      * @param array $adapter
      * @return object
      */
-    public static function gaufretteFactory($adapter)
+    public static function gaufretteFactory(array $adapter)
     {
         if (!class_exists($adapter['adapterClass'])) {
             throw new \RuntimeException(sprintf('Adapter class %s does not exist!', $adapter['adapterClass']));
@@ -192,7 +194,7 @@ class StorageManager {
      * @param array $adapter
      * @return object
      */
-    public static function flysystemFactory($adapter)
+    public static function flysystemFactory(array $adapter)
     {
         if (class_exists($adapter['adapterClass'])) {
             return (new \ReflectionClass($adapter['adapterClass']))->newInstanceArgs($adapter['adapterOptions']);
