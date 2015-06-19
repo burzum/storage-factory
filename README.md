@@ -45,9 +45,9 @@ Flush or renews adapter objects:
 
 ```php
 // Flushes a specific adapter
-StorageManager::flash('LocalGaufrette');
+StorageManager::flush('LocalGaufrette');
 // Flushes ALL adapters
-StorageManager::flash('LocalGaufrette');
+StorageManager::flush();
 
 // Renews an adapter, set second arg to true
 StorageManager::adapter('LocalGaufrette', true);
