@@ -18,8 +18,8 @@ matrix:
         - COVERALLS=1
 
 before_script:
-  - ls -ashl
-  - cd ./burzum/storage
+  - cd burzum
+  - cd storage
   - composer self-update
   - composer install --prefer-dist --no-interaction
   - sh -c "if [ '$COVERALLS' = '1' ]; then composer require --dev satooshi/php-coveralls:dev-master; fi"
