@@ -13,7 +13,6 @@
 	],
 	"minimum-stability": "dev",
 	"require": {
-		"php": ">=5.4.16",
 		"knplabs/gaufrette": "*",
 		"league/flysystem": "*"
 	},
