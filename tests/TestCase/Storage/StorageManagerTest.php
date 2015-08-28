@@ -1,17 +1,17 @@
 <?php
 /**
- * StorageManagerTest
+ * StorageFactoryTest
  *
  * @author Florian Krämer
  * @copyright 2012 - 2015 Florian Krämer
  * @license MIT
  */
-namespace Burzum\Storage\Test\TestCase\Storage;
+namespace Burzum\StorageFactory\Test\TestCase\Storage;
 
-use Burzum\Storage\Test\TestCase\StorageTestCase;
-use Burzum\Storage\StorageManager;
+use Burzum\StorageFactory\Test\TestCase\StorageTestCase;
+use Burzum\StorageFactory\StorageFactory;
 
-class StorageManagerTest extends StorageTestCase {
+class StorageFactoryTest extends StorageTestCase {
 
 /**
  * testAdapter
@@ -20,14 +20,14 @@ class StorageManagerTest extends StorageTestCase {
  */
     public function testAdapter()
     {
-        $result = StorageManager::adapter('Local');
+        $result = StorageFactory::get('Local');
         $this->assertEquals(get_class($result), 'Gaufrette\Filesystem');
 
-        $result = StorageManager::adapter('LocalFlysystem');
+        $result = StorageFactory::get('LocalFlysystem');
         $this->assertEquals(get_class($result), 'League\Flysystem\Adapter\Local');
 
         try {
-            StorageManager::adapter('Does Not Exist');
+            StorageFactory::get('Does Not Exist');
             $this->fail('Exception not thrown!');
         } catch (\RuntimeException $e) {}
     }
@@ -39,7 +39,7 @@ class StorageManagerTest extends StorageTestCase {
  */
     public function testConfig()
     {
-        $result = StorageManager::config('Local');
+        $result = StorageFactory::config('Local');
         $expected = [
             'adapterOptions' => [
                 0 => $this->testPath,
@@ -49,7 +49,7 @@ class StorageManagerTest extends StorageTestCase {
             'class' => '\Gaufrette\Filesystem'
         ];
         $this->assertEquals($result, $expected);
-        $this->assertFalse(StorageManager::config('Does not exist'));
+        $this->assertFalse(StorageFactory::config('Does not exist'));
     }
 
 /**
@@ -59,11 +59,11 @@ class StorageManagerTest extends StorageTestCase {
  */
     public function testFlush()
     {
-        $config = StorageManager::config('Local');
-        $result  = StorageManager::flush('Local');
+        $config = StorageFactory::config('Local');
+        $result  = StorageFactory::flush('Local');
         $this->assertTrue($result);
-        $result  = StorageManager::flush('Does not exist');
+        $result  = StorageFactory::flush('Does not exist');
         $this->assertFalse($result);
-        StorageManager::config('Local', $config);
+        StorageFactory::config('Local', $config);
     }
 }

@@ -1,9 +1,8 @@
 <?php
-namespace Burzum\Storage\Test\TestCase;
+namespace Burzum\StorageFactory\Test\TestCase;
 
 use PHPUnit_Framework_TestCase;
-use Burzum\Storage\StorageManager;
-use Burzum\Storage\FileStorageUtils;
+use Burzum\StorageFactory\StorageFactory;
 
 /**
  * StorageTestCase
@@ -25,16 +24,18 @@ class StorageTestCase extends PHPUnit_Framework_TestCase {
 
         $this->testPath = TMP;
 
-        StorageManager::config('Local', array(
+        StorageFactory::config('Local', array(
             'adapterOptions' => [$this->testPath, true],
             'adapterClass' => '\Gaufrette\Adapter\Local',
             'class' => '\Gaufrette\Filesystem'
         ));
 
-        StorageManager::config('LocalFlysystem', array(
+        StorageFactory::config('LocalFlysystem', array(
             'adapterOptions' => [$this->testPath],
-            'engine' => StorageManager::FLYSYSTEM_ENGINE,
+            'engine' => StorageFactory::FLYSYSTEM_ENGINE,
             'adapterClass' => 'Local',
         ));
     }
+
+    public function testSomething() {}
 }

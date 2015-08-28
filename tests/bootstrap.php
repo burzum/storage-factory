@@ -6,4 +6,4 @@ if (!is_dir(TMP)) {
     mkdir(TMP);
 }
 
-require '/vendor/autoload.php';
+require_once 'vendor/autoload.php';
