@@ -1,9 +1,9 @@
 {
-	"name": "burzum/storage",
+	"name": "burzum/storage-factory",
 	"type": "library",
 	"description": "This library is a factory to instantiate storage adapters based on the Flysystem or Gaufrette library. It can deal with both! Migrating from one lib to another should be easy this way.",
-	"keywords": ["file", "filesystem", "media", "abstraction", "cakephp", "storage"],
-	"homepage": "http://github.com/burzum/storage",
+	"keywords": ["file", "filesystem", "media", "abstraction", "storage", "s3", "dropbox", "ftp", "sftp", "file"],
+	"homepage": "http://github.com/burzum/storage-factory",
 	"license": "MIT",
 	"authors": [
 		{
@@ -17,17 +17,17 @@
 		"league/flysystem": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "*"
+		"phpunit/phpunit": "~4.8"
 	},
 	"autoload": {
 		"psr-4": {
-			"Burzum\\Storage\\": "src",
-			"Burzum\\Storage\\Test\\Fixture\\": "tests\\Fixture"
+			"Burzum\\StorageFactory\\": "src",
+			"Burzum\\StorageFactory\\Test\\Fixture\\": "tests\\Fixture"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Burzum\\Storage\\Test\\": "tests"
+			"Burzum\\StorageFactory\\Test\\": "tests"
 		}
 	}
 }

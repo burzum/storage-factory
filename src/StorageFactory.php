@@ -1,14 +1,14 @@
 <?php
-namespace Burzum\Storage;
+namespace Burzum\StorageFactory;
 
 /**
- * StorageManager - Manages and instantiates storage engine adapters.
+ * StorageFactory - Manages and instantiates storage engine adapters.
  *
  * @author Florian Krämer
  * @copyright 2012 - 2015 Florian Krämer
  * @license MIT
  */
-class StorageManager {
+class StorageFactory {
 
 /**
  * Adapter configs
@@ -31,7 +31,7 @@ class StorageManager {
     public static $defaultEngine = 'Gaufrette';
 
 /**
- * Return a singleton instance of the StorageManager.
+ * Return a singleton instance of the StorageFactory.
  *
  * @return ClassRegistry instance
  */
@@ -39,7 +39,7 @@ class StorageManager {
     {
         static $instance = [];
         if (!$instance) {
-            $instance[0] = new StorageManager();
+            $instance[0] = new StorageFactory();
         }
         return $instance[0];
     }
@@ -53,7 +53,7 @@ class StorageManager {
  */
     public static function config($adapter, array $options = [])
     {
-        $_this = StorageManager::getInstance();
+        $_this = StorageFactory::getInstance();
 
         if (!empty($options)) {
             return $_this->_adapterConfig[$adapter] = $options;
@@ -75,7 +75,7 @@ class StorageManager {
  */
     public static function flush($name = null)
     {
-        $_this = StorageManager::getInstance();
+        $_this = StorageFactory::getInstance();
 
         if (!is_null($name)) {
             if (isset($_this->_adapterConfig[$name])) {
@@ -98,7 +98,7 @@ class StorageManager {
  */
     protected static function _getAdapter($adapterName)
     {
-        $_this = StorageManager::getInstance();
+        $_this = StorageFactory::getInstance();
 
         if (!empty($_this->_adapterConfig[$adapterName]['object'])) {
             return $_this->_adapterConfig[$adapterName]['object'];
@@ -126,7 +126,7 @@ class StorageManager {
  * @throws RuntimeException
  * @return Gaufrette object as configured by first argument
  */
-    public static function adapter($adapterName, $renewObject = false)
+    public static function get($adapterName, $renewObject = false)
     {
         if (is_string($adapterName)) {
             $adapter = self::_getAdapter($adapterName);
@@ -163,7 +163,7 @@ class StorageManager {
 
         if (isset($object)) {
             if ($fromConfigStore) {
-                $_this = StorageManager::getInstance();
+                $_this = StorageFactory::getInstance();
                 $_this->_adapterConfig[$adapterName]['object'] = &$object;
             }
             return $object;

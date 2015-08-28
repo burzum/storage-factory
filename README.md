@@ -2,8 +2,8 @@ Storage Factory Library for Flysystem and Gaufrette
 ===================================================
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt) 
-[![Build Status](https://img.shields.io/travis/burzum/storage/3.0.svg?style=flat-square)](https://travis-ci.org/burzum/storage) 
-[![Coverage Status](https://img.shields.io/coveralls/burzum/storage/3.0.svg?style=flat-square)](https://coveralls.io/r/burzum/storage)
+[![Build Status](https://img.shields.io/travis/burzum/storage-factory/3.0.svg?style=flat-square)](https://travis-ci.org/burzum/storage-factory) 
+[![Coverage Status](https://img.shields.io/coveralls/burzum/storage-factory/3.0.svg?style=flat-square)](https://coveralls.io/r/burzum/storage-factory)
 
 Requirements
 ------------
@@ -22,14 +22,14 @@ Configure the adapter instances:
 
 ```php
 $basePath = '/your/base/path';
-StorageManager::config('LocalGaufrette', array(
+StorageFactory::config('LocalGaufrette', array(
 	'adapterOptions' => [$basePath, true],
 	'adapterClass' => '\Gaufrette\Adapter\Local',
 	'class' => '\Gaufrette\Filesystem'
 ));
-StorageManager::config('LocalFlysystem', array(
+StorageFactory::config('LocalFlysystem', array(
 	'adapterOptions' => [$basePath],
-	'engine' => StorageManager::FLYSYSTEM_ENGINE,
+	'engine' => StorageFactory::FLYSYSTEM_ENGINE,
 	'adapterClass' => 'Local',
 ));
 ```
@@ -37,26 +37,26 @@ StorageManager::config('LocalFlysystem', array(
 And get instances of the adapters as you need them.
 
 ```php
-$flysystemLocalFSAdapter = StorageManager::adapter('LocalGaufrette');
-$gaufretteLocalFSAdapter = StorageManager::adapter('LocalFlysystem');
+$flysystemLocalFSAdapter = StorageFactory::get('LocalGaufrette');
+$gaufretteLocalFSAdapter = StorageFactory::get('LocalFlysystem');
 ```
 
 Flush or renews adapter objects:
 
 ```php
-// Flushes a specific adapter
-StorageManager::flush('LocalGaufrette');
+// Flushes a specific adapter based on the config name
+StorageFactory::flush('LocalGaufrette');
 // Flushes ALL adapters
-StorageManager::flush();
+StorageFactory::flush();
 
 // Renews an adapter, set second arg to true
-StorageManager::adapter('LocalGaufrette', true);
+StorageFactory::get('LocalGaufrette', true);
 ```
 
 Support
 -------
 
-For bugs and feature requests, please use the [issues](https://github.com/burzum/storage/issues) section of this repository.
+For bugs and feature requests, please use the [issues](https://github.com/burzum/storage-factory/issues) section of this repository.
 
 Contributing
 ------------
