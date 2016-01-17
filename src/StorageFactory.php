@@ -131,7 +131,7 @@ class StorageFactory {
         if (is_string($adapterName)) {
             $adapter = self::_getAdapter($adapterName);
             if (is_object($adapter) && $renewObject === false) {
-                return $adapterName;
+                return $adapter;
             }
         }
 
